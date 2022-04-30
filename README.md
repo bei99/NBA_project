@@ -48,3 +48,4 @@ PART IV:
 
 We fit our data in different model to compare its performance. But our main goal is to use a Neural Network with a custom loss function that optimizes our ROI (Return of Investment) by adding the odds. The logic is to penalise the model if the returns are negative and incentivizing a positive result. (Expand)
 
+-Results/Predictions
