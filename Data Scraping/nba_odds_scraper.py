@@ -126,35 +126,10 @@ def scrape_seasons_current(filename):       # function to get the odds of curren
     all_data = pd.DataFrame(odds_data)
     all_data.to_csv("%s.csv" % filename)
 
-'''
 scrape_seasons_current("odds21_22")
 year20 = ['2020-2021']
-scrape_seasons(year20, "odds20_21")
-year19 = ['2019-2020']
-scrape_seasons(year19, "odds19_20")
-year18 = ['2018-2019']
-scrape_seasons(year18, "odds18_19")
-year17 = ['2017-2018']
-scrape_seasons(year17, "odds17_18")
-year16 = ['2016-2017']
-scrape_seasons(year16, "odds16_17")
-year15 = ['2015-2016']
-scrape_seasons(year15, "odds15_16")
-year14 = ['2014-2015']
-scrape_seasons(year14, "odds14_15")
-year13 = ['2013-2014']
-scrape_seasons(year13, "odds13_14")
-year12 = ['2012-2013']
-scrape_seasons(year12, "odds12_13")
-year11 = ['2011-2012']
-scrape_seasons(year11, "odds11_12")
-year10 = ['2010-2011']
-scrape_seasons(year10, "odds10_11")
-year9 = ['2009-2010']
-scrape_seasons(year9, "odds09_10")
-year8 = ['2008-2009']
-scrape_seasons(year8, "odds08_09")
-'''
+scrape_seasons(years, "odds08_21")
+
 
 driver.close()
 
