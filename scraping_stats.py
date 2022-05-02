@@ -1,5 +1,3 @@
-# extract player box scores
-
 import json
 import requests
 import pandas as pd
@@ -14,15 +12,23 @@ request_headers = {
 
 }
 
+years = ['2021-22', '2020-21', '2019-20', '2018-19', '2017-18', '2016-17', '2015-16', '2014-15', '2013-14', '2012-13',
+         '2011-12', '2010-11', '2009-10', '2008-09']
+
 
 def create_list_tuples(first, second):
-    z = {}
+    """
+    :param first: first part of the url
+    :param second: second part of the url
+    :return: list with all the url links to scrape
+    """
+    z = {}                                      # initialize variables
     url = []
-    for i in years:
+    for i in years:                             # loop to get all the years and store the values in a list
         url.append(first + i + second)
     z = dict(zip(years, url))
-    z_list = [(k, v) for k, v in z.items()]
-    return z_list
+    list_url = [(k, v) for k, v in z.items()]
+    return list_url
 
 
 def shape_url(season, url):
@@ -30,25 +36,32 @@ def shape_url(season, url):
 
 
 def extract_data(url):
-    r = requests.get(url, headers=request_headers)
+    """
+    :param url: the link of the url to scrape
+    :return: DataFrame with the data from that link
+    """
+    r = requests.get(url, headers=request_headers)    # request and scrape the info from the page
     resp = r.json()
     print(resp)
-    results = resp['resultSets'][0]
+    results = resp['resultSets'][0]                  # order the dataframe following the json file structure
     headers = results['headers']
     rows = results['rowSet']
     frame = pd.DataFrame(rows)
     frame.columns = headers
-    # data manipulation (index by season)
-    params = resp['parameters']
+    params = resp['parameters']                     # data manipulation (index by season)
     season = params['SeasonYear']
     frame.insert(loc = 0, column = 'Season', value = season)
     return frame
 
 
 def list_to_df(list_url):
-    data = pd.DataFrame()
+    """
+    :param list_url: the list with all the links to scrape
+    :return: Dataframe with all the data from those links
+    """
+    data = pd.DataFrame()                           # initialize variables
     data_merged = []
-    for i, j in enumerate(list_url):
+    for i, j in enumerate(list_url):                # loop extract_data for all the links in the list
         season = j[0]
         url = j[1]
         data = extract_data(shape_url(season, url))
@@ -57,24 +70,19 @@ def list_to_df(list_url):
 
 
 def df_to_csv(list_df, filename):
+    """
+    :param list_df: the output of list_to_df
+    :param filename: the name for the csv file
+    :return: a csv from the DataFrames
+    """
     df_merged = pd.DataFrame()
-    for df in list_df:
+    for df in list_df:                            # Merge all the DataFrame into one and store it as a csv file
         df_merged = pd.concat(list_df, axis = 0)
     df_merged.to_csv("data/%s.csv" % filename)
 
-def links_to_csv(first, second, filename):
-    f = create_list_tuples(first, second)
-    data = list_to_df(f)
-    all_data = df_to_csv(data, filename)
-    return all_data
-
-years = ['2021-22', '2020-21', '2019-20', '2018-19', '2017-18', '2016-17', '2015-16', '2014-15', '2013-14', '2012-13',
-         '2011-12', '2010-11', '2009-10', '2008-09']
-
-
 
 # data for basic teams stats(per minute)
-'''f_basic = 'https://stats.nba.com/stats/teamgamelogs?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season='
+f_basic = 'https://stats.nba.com/stats/teamgamelogs?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season='
 s_basic = '&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision='
 team_basic = create_list_tuples(f_basic, s_basic)
 data_basic = list_to_df(team_basic)
@@ -112,44 +120,4 @@ data_misc = list_to_df(misc)
 df_to_csv(data_misc, "miscellaneous stats")
 
 
-# data for player's basic stats
-f_p_basic = 'https://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season='
-s_p_basic = '&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision='
-p_basic = create_list_tuples(f_p_basic, s_p_basic)
-data_p_basic = list_to_df(p_basic)
-df_to_csv(data_p_basic, "player's basic stats")'''
-
-
-# data for player's advanced stats (none)
-f_p_adv = 'https://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Advanced&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season='
-s_p_adv = '&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision='
-p_adv = create_list_tuples(f_p_adv, s_p_adv)
-data_p_adv = list_to_df(p_adv)
-df_to_csv(data_p_adv, "player's advanced stats")
-
-# data for player's miscellaneous stats
-'''f_p_misc = 'https://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Misc&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season='
-s_p_misc = '&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision='
-p_misc = create_list_tuples(f_p_misc, s_p_misc)
-data_p_misc = list_to_df(p_misc)
-df_to_csv(data_p_misc, "player's misc. stats")
-
-
-# data for player's scoring stats
-f_p_scoring = 'https://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Scoring&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season='
-s_p_scoring = '&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&VsConference=&VsDivision='
-p_scoring = create_list_tuples(f_p_scoring, s_p_scoring)
-data_p_scoring = list_to_df(p_scoring)
-df_to_csv(data_p_scoring, "player's scoring stats")
-
-
-# data for player's usage stats ( for correct use, change Season for SeasonYear in params)
-f_usage = 'https://stats.nba.com/stats/leaguedashplayerstats?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=00&Location=&MeasureType=Usage&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season='
-s_usage = '&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=&Weight='
-player_usage = create_list_tuples(f_usage, s_usage)
-data_usage = list_to_df(player_usage)
-df_to_csv(data_usage, "player_usage_stats")'''
-
-
-#f.to_csv("data\player_box_20_21.csv".format(season))
 
