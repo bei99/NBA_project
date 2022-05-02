@@ -32,6 +32,8 @@ As we don't dispose of the stats for the actual match at the moment of making a 
 
 As such, we obtained the following features:
 - EWA last 10 games
+- EWA last 10 games HOME
+- EWA last 10 games AWAY
 - EWA last 5 games
 - EWA last 5 games HOME
 - EWA last 5 games AWAY
