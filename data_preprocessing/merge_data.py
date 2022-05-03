@@ -13,6 +13,8 @@ merged['Results'] = merged['Results'].shift(-1)
 merged['Score'] = merged['Score'].shift(-1)
 merged.dropna(axis=0, how='any', inplace=True)  # drop na values
 merged = merged.drop('Unnamed: 0', 1)
+
+merged.replace('FALSE', '0.0', inplace=True )  #drop FALSE values
 merged.to_csv(r'final_dataset.csv')
 
 
