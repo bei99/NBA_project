@@ -1,5 +1,5 @@
 import pandas as pd
-
+import numpy as np
 all_odds = pd.read_csv(r'data/odds_all_years.csv')
 
 pd.set_option('display.max_columns', None)
@@ -57,20 +57,29 @@ def cleaning(dataset):
     dataset.insert(4, "AWAY", away)
 
 
-
-
 team_names(all_odds)
 cleaning(all_odds)
-all_odds.replace('OT', '', inplace=True)               #drop and clean some columns
+
+# fix bug with 'results'
+all_odds = all_odds.drop('Results', 1)
+all_odds['Score'] = all_odds['Score'].replace('OT', '', regex=True)
+score_sep = all_odds.Score.str.split(":", expand=True, n=1)
+score_sep.columns=['s_home', 's_away']
+score_sep['s_home'] = pd.to_numeric(score_sep['s_home'], errors='coerce')
+score_sep['s_away'] = pd.to_numeric(score_sep['s_away'], errors='coerce')
+score_sep['Results'] = np.where((score_sep['s_home'] > score_sep['s_away']),'1','0')
+results = score_sep['Results']
+all_odds = pd.concat([all_odds, results], axis=1)
+
+#drop and clean some columns
 all_odds['AWAY'] = all_odds['AWAY'].str.strip()
 all_odds.set_index(['GAME_DATE', 'HOME', 'AWAY'], inplace=True)
-all_odds['Results'].replace(2, 0, inplace=True)
 all_odds = all_odds.drop('Unnamed: 0', 1)
 all_odds = all_odds.drop('Teams', 1)
 all_odds = all_odds.drop('Unnamed: 0.1', 1)
 
 
-
-all_odds.to_csv("odds_cleaning.csv")
+print(all_odds.tail(6))
+all_odds.to_csv("Odds_final.csv")
 
 
