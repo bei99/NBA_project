@@ -15,6 +15,9 @@ merged.dropna(axis=0, how='any', inplace=True)  # drop na values
 merged = merged.drop('Unnamed: 0', 1)
 
 merged.replace('FALSE', '0.0', inplace=True )  #drop FALSE values
+#merged = merged[merged.Odds1 != 'FALSE'] # used to final_dataset_nonzero.csv
 merged.to_csv(r'final_dataset.csv')
+
+
 
 
