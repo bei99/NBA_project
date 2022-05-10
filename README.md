@@ -14,6 +14,7 @@ The Program scraping_stats.py scrapes the required information(box score stats, 
 
 On the other hand, the program nba_odds_scraper.py scrapes the average closing odds for all the games in the aforementioned date span. It does so by using selenium webdriver and returns the odds with the necessary information to identify them (date, teams, score and results) in a csv file.
 
+(In: data_scraping)
 
 PART II:
 
@@ -26,6 +27,8 @@ In the case of the nba stats, the data cleaning can be summarized as:
 - Merge all the data into one dataset
 
 Similarly, in the case of the odds we follow the same procedure and replace the team names for their abbreviation.
+
+(In: data_scraping)
 
 PART III:
 
@@ -46,6 +49,7 @@ The model will be designed to predict a binary outcome between HOME(1) and AWAY(
 
 We will also perform PCA on our data set, both for data analysis and for dimensionality reduction purposes. As there are not that many features nor our sample is that big, we will still use the raw data as we as the fitted data for our model and see if there is any improvement.
 
+(In: data_preprocessing)
 
 PART IV:
 
@@ -55,7 +59,8 @@ But our aim is not that of accuracy but to generate an positive expected value b
 
 As we are dealing with the probability of a binary outcome, we could use either Binary-Cross Entropy or Squared-Mean Error. While both returns a similar accuracy, the latter yields a better loss. We implement the custom loss function as described in Hubáček et al.(2019)
 
-
+(In: NN Model 2 and NN_custom_loss, still on-going)
 
 PART V:
-(On-going)
+
+(In: pred_data and pred_data_custom, still on-going)
