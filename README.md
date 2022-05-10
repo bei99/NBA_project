@@ -6,6 +6,7 @@ Project Index:
 2) Data Cleaning
 3) Data Analysis/ Feature Engineering 
 4) Model Implementation
+5) Results
 
 PART I:
 
@@ -48,6 +49,13 @@ We will also perform PCA on our data set, both for data analysis and for dimensi
 
 PART IV:
 
-We fit our data in different model to compare its performance. But our main goal is to use a Neural Network with a custom loss function that optimizes our ROI (Return of Investment) by adding the odds. The logic is to penalise the model if the returns are negative and incentivizing a positive result. (Expand)
+Using keras library we use implement a Multi-layer Perceptron Neural Network. Once the parameters are optimized, it achieves an accuracy of 67%, not far from the 70-72% accuracy of the bookmakers. 
 
--Results/Predictions
+But our aim is not that of accuracy but to generate an positive expected value by making bets on the model's predictions. For that reason, we need our model to have a good performance in terms of accuracy but it would be desirable to not coincide with the booksmaker's predictions as even if we match their predictions, there exist a rake of about 5% which would make our higly accurate model umprofitable. This is why we implement our own custom loss function to decorrelate our model´s predictions with that of the bookmaker's. 
+
+As we are dealing with the probability of a binary outcome, we could use either Binary-Cross Entropy or Squared-Mean Error. While both returns a similar accuracy, the latter yields a better loss. We implement the custom loss function as described in Hubáček et al.(2019)
+
+
+
+PART V:
+(On-going)
