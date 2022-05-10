@@ -1,6 +1,19 @@
 # NBA_project
-ML implementation for NBA predictions
-
+ A ML implementation for NBA predictions
+ 
+ This is an end-to-end project for betting on the NBA. The program retrieves the in-game stats for all the games of the regular season from 2008 to 2022 as well as its corresponding odds and stores that information in a csv file. As those stats are not available before the match - they are the stats generated during the match- we calculate the Exponentially Weighted Moving Average (EWMA) from past games; distinguishing from time span (last 10 or 5 games) as well as Home and Away games. In total, each sample has 264 features for each team. After calculating the EWMA of each individual team, we take the difference for each game between the Home team and the Away one in order to store all the data in a single vector.
+ 
+ Our Neural Network model will fit that data to try to predict a binary outcome, either 1 for home team victory or 0 for away victory. Thus, our model falls in the classic application of logistic regression as a binary classification problem. The resulting Neural Network(the specifics can be found in the jupyter notebook), after some tuning, achieves an accuracy of 67% not far from the 70-72% achieved by bookmakers. Yet, our model goal is not accuracy but to profitably bet on the model's predictions.
+ 
+ Profitability in betting is not determined by how accurate one is but how accurate one is compared to the bookmaker. The probability the bookmaker's give to each outcome is stored in the odds for the game. While adding both possible outcomes (Home or Away win) should yield a probability of 100%, from the odds we gathered the average probability amounts to 104%. This extra 4% is what the bookmaker's make regardless of the outcome of the game. Therefore, to beat the bookies one should be 4% more accurate despite the bookies already being highly accurate, and this is just to break even.
+ 
+ Our model should aim to spot those games in which the odds are wrong, that is, the probabilities that they represent mismatch ours. While the odds contain information regarding the outcome of the game -adding them to our features would improve our model's accuracy-, our profitability constraint makes it desirable to decorrelate our model with the bookmakers preditictions. In theory, this allows us to spot those games in which the bookies predictions does not coincide with ours, and that margin is what allows us to profit. Therefore we implement a custom loss function, a variation of the Mean Squared Error with the decorrelation effects we desire (further explored in the jupyter notebook).
+ 
+ 
+ 
+ 
+ 
+ 
 Project Index:
 1) Data gathering
 2) Data Cleaning
@@ -55,7 +68,7 @@ PART IV:
 
 Using keras library we use implement a Multi-layer Perceptron Neural Network. Once the parameters are optimized, it achieves an accuracy of 67%, not far from the 70-72% accuracy of the bookmakers. 
 
-But our aim is not that of accuracy but to generate an positive expected value by making bets on the model's predictions. For that reason, we need our model to have a good performance in terms of accuracy but it would be desirable to not coincide with the booksmaker's predictions as even if we match their predictions, there exist a rake of about 5% which would make our higly accurate model umprofitable. This is why we implement our own custom loss function to decorrelate our model´s predictions with that of the bookmaker's. 
+But our aim is not that of accuracy but to generate an positive expected value by making bets on the model's predictions. For that reason, we need our model to have a good performance in terms of accuracy but it would be desirable to not coincide with the booksmaker's predictions as even if we match their predictions, there exist a rake of about 4% which would make our higly accurate model umprofitable. This is why we implement our own custom loss function to decorrelate our model´s predictions with that of the bookmaker's. 
 
 As we are dealing with the probability of a binary outcome, we could use either Binary-Cross Entropy or Squared-Mean Error. While both returns a similar accuracy, the latter yields a better loss. We implement the custom loss function as described in Hubáček et al.(2019)
 
