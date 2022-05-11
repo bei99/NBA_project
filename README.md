@@ -76,4 +76,6 @@ As we are dealing with the probability of a binary outcome, we could use either 
 
 PART V:
 
+Once we have our predictions, we need a betting strategy which ideally maximize profits while minimize the variance.
+
 (In: pred_data and pred_data_custom, still on-going)
