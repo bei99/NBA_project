@@ -80,6 +80,15 @@ Once we have our predictions, we need a betting strategy which ideally maximize 
 
 We then decided to study in which probabilites intervals our model could outperform the bookmaker. As such we divided the probability distribution both for home and away victory in 0.05 segments and create a function to see the expected value over the long run after reapeated bets. The stakes (size of the bet) are adapted proportionally to return a 1 unit profit. The specifics are further explained in the jupyter notebook.
 
-The results under this strategy are illuminating, our model consistently return great profits for Away bets with a confidence interval from 20-55 %. 
+The results under this strategy are illuminating, our model consistently return great profits for Away bets with a confidence interval from 20-55 %. This graph shows the profit from our test data(from 2019 to 2022) with the regular Mean Squared Error loss function, with a return of over 900 units. If each unit represent 25€, it would have generated a 22500€ profit with almost none negative variance.
+
+![image](https://user-images.githubusercontent.com/92385529/167978480-6e4480ac-26bc-41ab-98f1-d4c9ca351324.png)
+
+You can check the predictions and outcomes in: pred_data_MSE_base.csv
+
+Our custom loss function has yielded a return of over 1,400 units from the same test data, but we are still optimizing the constant paramater.
+
+As for an account for the bookmaker bias in such games - Away victory with a confidence threshold ranging from 20 to 55% -, a quick explanation can be that the odds incorporate not only the bookmaker prediction but also all the bettors prediction. As such, there seems to exist a generalized bias towards the favourites which is increased when that same team plays at home. 
+
 
 (In: pred_data_interval_strategy.ipynb)
