@@ -76,6 +76,10 @@ As we are dealing with the probability of a binary outcome, we could use either 
 
 PART V:
 
-Once we have our predictions, we need a betting strategy which ideally maximize profits while minimize the variance.
+Once we have our predictions, we need a betting strategy which ideally maximize profits while minimize the variance. After various attempts to create a profitable strategy, we found that our NN predictions were only marginally successful over the long run. All these previous attempts were focused on only picking bets with a threshold of >50%, in which our model failed to profit.
 
-(In: pred_data and pred_data_custom, still on-going)
+We then decided to study in which probabilites intervals our model could outperform the bookmaker. As such we divided the probability distribution both for home and away victory in 0.05 segments and create a function to see the expected value over the long run after reapeated bets. The stakes (size of the bet) are adapted proportionally to return a 1 unit profit. The specifics are further explained in the jupyter notebook.
+
+The results under this strategy are illuminating, our model consistently return great profits for Away bets with a confidence interval from 20-55 %. 
+
+(In: pred_data_interval_strategy.ipynb)
