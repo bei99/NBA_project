@@ -9,6 +9,7 @@
  
  Our model should aim to spot those games in which the odds are wrong, that is, the probabilities that they represent mismatch ours. While the odds contain information regarding the outcome of the game -adding them to our features would improve our model's accuracy-, our profitability constraint makes it desirable to decorrelate our model with the bookmakers preditictions. In theory, this allows us to spot those games in which the bookies predictions does not coincide with ours, and that margin is what allows us to profit. Therefore we implement a custom loss function, a variation of the Mean Squared Error with the decorrelation effects we desire (further explored in the jupyter notebook).
  
+ Our model showed outstanding performance in some specific confidence interval, profiting for a generalised bias in Away win in a threshold range from 20-55%. It resulted, from our standard MSE loss model, in over 900 units from 2019-22 with almost no negative variance. If a unit is set as 25€, it would result in a profit of 22,500€. Our custom function has yielded over 1400 units, which would translate to 35,000€ in the same test set; but we are still working in optimizing the constant parameter.
  
  
  
