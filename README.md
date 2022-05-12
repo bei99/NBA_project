@@ -28,7 +28,7 @@ The Program scraping_stats.py scrapes the required information(box score stats, 
 
 On the other hand, the program nba_odds_scraper.py scrapes the average closing odds for all the games in the aforementioned date span. It does so by using selenium webdriver and returns the odds with the necessary information to identify them (date, teams, score and results) in a csv file.
 
-(In: data_scraping)
+(In folder: data_scraping)
 
 PART II:
 
@@ -42,7 +42,7 @@ In the case of the nba stats, the data cleaning can be summarized as:
 
 Similarly, in the case of the odds we follow the same procedure and replace the team names for their abbreviation.
 
-(In: data_scraping)
+(In folder: data_scraping)
 
 PART III:
 
@@ -61,9 +61,7 @@ Future implementations will include: Player individual stats, ELO Rankings, days
 
 The model will be designed to predict a binary outcome between HOME(1) and AWAY(0). To fit the stats in one vector, we take the difference between the stats of the HOME team and the AWAY one (HOME - AWAY). Thus, keeping all the stats for the game in one row.
 
-We will also perform PCA on our data set, both for data analysis and for dimensionality reduction purposes. As there are not that many features nor our sample is that big, we will still use the raw data as we as the fitted data for our model and see if there is any improvement.
-
-(In: data_preprocessing)
+(In folder: data_preprocessing)
 
 PART IV:
 
