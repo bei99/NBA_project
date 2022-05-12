@@ -72,8 +72,10 @@ But our aim is not that of accuracy but to generate an positive expected value b
 
 As we are dealing with the probability of a binary outcome, we could use either Binary-Cross Entropy or Squared-Mean Error. While both returns a similar accuracy, the latter yields a better loss. We implement the custom loss function as described in Hubáček et al.(2019)
 
-(In: NN Model 2 and NN_custom_loss, still on-going)
+(In: NN_Model.ipynb )
 
 PART V:
+
+Once we have our predictions, we need a betting strategy which ideally maximize profits while minimize the variance.
 
 (In: pred_data and pred_data_custom, still on-going)
